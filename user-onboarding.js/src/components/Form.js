@@ -31,7 +31,7 @@ function UserOnboardingForm(props) {
   console.log(props);
   return (
     <StyledDiv className="New-user-form">
-      <h1>Enter New User</h1>
+      <h1>Enter New User:</h1>
       <Form className="form">
         <label>
           First Name:
