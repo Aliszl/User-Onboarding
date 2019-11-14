@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 
 function App() {
-  return (<div>Hello</div>), (<Form />);
+  return <Form />;
 }
 
 export default App;

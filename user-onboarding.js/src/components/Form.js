@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import axios from "axios";
 import styled from "styled-components";
-import {
-  withFormik,
-  Form,
-  Field,
-  validateYupSchema,
-  yupToFormErrors
-} from "formik";
+import { withFormik, Form, Field } from "formik";
 
 // Styling
 
@@ -26,6 +20,10 @@ const StyledDiv = styled.div`
     width: "30px";
   }
 `;
+
+const Users = () => {
+  const [users, setUsers] = useState([]);
+};
 
 function UserOnboardingForm(props) {
   console.log(props);
@@ -51,13 +49,21 @@ function UserOnboardingForm(props) {
           />
         </label>
         <br />
-        {/* 
+        <label>
+          Password :
+          <Field
+            type="password"
+            name="password"
+            placeholder="Enter your password here"
+          />
+        </label>
         <br />
         <label>
           I confirm I have read and agree to the Terms of Service
-          <Field type="checkbox" name="terms of service" />
-        </label> */}
-        <Field className="submit-button" type="submit" />
+          <Field type="checkbox" name="terms" />
+        </label>
+        {/* <Field className="submit-button" type="submit" /> */}
+        <button>Submit</button>
       </Form>
     </StyledDiv>
   );
@@ -67,21 +73,23 @@ const UserOnboardingFormWithFormik = withFormik({
   mapPropsToValues() {
     return {
       first_name: "",
-      last_name: ""
-      // password: "",
+      last_name: "",
+      password: "",
+      terms: false
     };
   },
   validationSchema: Yup.object().shape({
     first_name: Yup.string().required("Please enter first name"),
-    last_name: Yup.string().required("Please enter last name")
-    //   password: Yup.string().required("password is a required field")
+    last_name: Yup.string().required("Please enter last name"),
+    password: Yup.string().required("password is a required field")
   }),
 
-  handleSubmit(values, tools) {
+  handleSubmit(input, tools) {
     axios
-      .post("https://reqres.in/api/users/", values)
+      .post("https://reqres.in/api/users/", input)
       .then(res => {
         console.log(res.data);
+        // tools.props.users;
         tools.resetForm();
       })
       .catch(err => {
